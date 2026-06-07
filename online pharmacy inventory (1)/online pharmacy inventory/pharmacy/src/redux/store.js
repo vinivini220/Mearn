@@ -1,16 +1,20 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
+const isLoggedIn = localStorage.getItem("isAdminLoggedIn") === "true";
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isLoggedIn: false,
+    isLoggedIn,
   },
   reducers: {
     login: (state) => {
       state.isLoggedIn = true;
+      localStorage.setItem("isAdminLoggedIn", "true");
     },
     logout: (state) => {
       state.isLoggedIn = false;
+      localStorage.removeItem("isAdminLoggedIn");
     },
   },
 });
