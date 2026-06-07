@@ -1,25 +1,41 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const AdminLogin = () => {
-
+const AdminLogin = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // direct inventory page open (no validation)
-    navigate("/inventory");
+    setError("");
+
+    if (!username.trim()) {
+      setError("Username is required.");
+      return;
+    }
+    if (!password.trim()) {
+      setError("Password is required.");
+      return;
+    }
+
+    if (username === "admin" && password === "admin123") {
+      if (onLogin) onLogin();
+      navigate("/admindashboard");
+    } else {
+      setError("Invalid username or password.");
+    }
   };
 
   return (
     <div style={containerStyle}>
       <div style={loginBox}>
-
         <div style={iconStyle}>💊</div>
 
         <h2 style={headingStyle}>Admin Login</h2>
+
+        {error && <p style={errorStyle}>{error}</p>}
 
         <input
           type="text"
@@ -40,20 +56,17 @@ const AdminLogin = () => {
         <button onClick={handleLogin} style={buttonStyle}>
           Login
         </button>
-
       </div>
     </div>
   );
 };
-
-/* ---------- Internal CSS ---------- */
 
 const containerStyle = {
   height: "100vh",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  background: "linear-gradient(135deg,#667eea,#764ba2)"
+  background: "linear-gradient(135deg,#667eea,#764ba2)",
 };
 
 const loginBox = {
@@ -62,17 +75,17 @@ const loginBox = {
   borderRadius: "12px",
   background: "white",
   textAlign: "center",
-  boxShadow: "0px 8px 30px rgba(0,0,0,0.35)"
+  boxShadow: "0px 8px 30px rgba(0,0,0,0.35)",
 };
 
 const iconStyle = {
   fontSize: "50px",
-  marginBottom: "15px"
+  marginBottom: "15px",
 };
 
 const headingStyle = {
   marginBottom: "20px",
-  color: "#333"
+  color: "#333",
 };
 
 const inputStyle = {
@@ -81,7 +94,7 @@ const inputStyle = {
   marginBottom: "15px",
   borderRadius: "8px",
   border: "1px solid #ccc",
-  outline: "none"
+  outline: "none",
 };
 
 const buttonStyle = {
@@ -93,7 +106,16 @@ const buttonStyle = {
   color: "white",
   fontWeight: "bold",
   cursor: "pointer",
-  fontSize: "16px"
+  fontSize: "16px",
+};
+
+const errorStyle = {
+  color: "#e53935",
+  fontSize: "14px",
+  marginBottom: "15px",
+  background: "#ffebee",
+  padding: "8px",
+  borderRadius: "6px",
 };
 
 export default AdminLogin;
