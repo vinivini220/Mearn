@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
+import useHover from "../../hooks/useHover";
+import HoverCard from "../../components/HoverCard";
+import { centeredCard } from "../../styles/sharedStyles";
 
 const Home = () => {
-  const [hover, setHover] = useState("");
+  const hoverState = useHover();
 
   const medicines = [
     { name: "Paracetamol", desc: "Fever & Pain Relief", price: 20 },
     { name: "Amoxicillin", desc: "Antibiotic Medicine", price: 45 },
     { name: "Vitamin C", desc: "Immunity Booster", price: 30 },
     { name: "Cetirizine", desc: "Allergy Relief", price: 25 },
+  ];
+
+  const features = [
+    { icon: "💊", title: "View Medicines", desc: "Browse available medicines in our pharmacy." },
+    { icon: "🔎", title: "Search Medicine", desc: "Quickly find medicines using search." },
+    { icon: "🛒", title: "Order Medicine", desc: "Place orders easily from available stock." },
   ];
 
   return (
@@ -21,7 +30,7 @@ const Home = () => {
       </div>
 
       {/* Welcome Section */}
-      <div style={{ ...cardStyle, marginBottom: "30px" }}>
+      <div style={{ ...centeredCard, marginBottom: "30px" }}>
         <h2 style={{ color: "#27ae60" }}>Welcome to Our Pharmacy 👋</h2>
         <p style={{ color: "#555", fontSize: "16px" }}>
           Easily search and find medicines, check availability,
@@ -31,25 +40,12 @@ const Home = () => {
 
       {/* Features */}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: "20px", marginBottom: "30px" }}>
-        {[
-          { icon: "💊", title: "View Medicines", desc: "Browse available medicines in our pharmacy." },
-          { icon: "🔎", title: "Search Medicine", desc: "Quickly find medicines using search." },
-          { icon: "🛒", title: "Order Medicine", desc: "Place orders easily from available stock." },
-        ].map((feature, idx) => (
-          <div
-            key={idx}
-            onMouseEnter={() => setHover(idx)}
-            onMouseLeave={() => setHover("")}
-            style={{
-              ...cardStyle,
-              transform: hover === idx ? "scale(1.05)" : "scale(1)",
-              transition: "0.3s",
-            }}
-          >
+        {features.map((feature, idx) => (
+          <HoverCard key={idx} hoverKey={idx} style={centeredCard} hoverState={hoverState}>
             <div style={{ fontSize: "40px" }}>{feature.icon}</div>
             <h3>{feature.title}</h3>
             <p>{feature.desc}</p>
-          </div>
+          </HoverCard>
         ))}
       </div>
 
@@ -60,42 +56,15 @@ const Home = () => {
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "20px" }}>
         {medicines.map((med, idx) => (
-          <div
-            key={idx}
-            onMouseEnter={() => setHover(`med${idx}`)}
-            onMouseLeave={() => setHover("")}
-            style={{
-              ...medicineCard,
-              transform: hover === `med${idx}` ? "scale(1.05)" : "scale(1)",
-              transition: "0.3s",
-            }}
-          >
+          <HoverCard key={idx} hoverKey={`med${idx}`} style={centeredCard} hoverState={hoverState}>
             <h4>{med.name}</h4>
             <p>{med.desc}</p>
             <p>₹{med.price}</p>
-          </div>
+          </HoverCard>
         ))}
       </div>
     </div>
   );
-};
-
-const cardStyle = {
-  background: "white",
-  padding: "25px",
-  borderRadius: "10px",
-  textAlign: "center",
-  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-  cursor: "pointer",
-};
-
-const medicineCard = {
-  background: "white",
-  padding: "20px",
-  borderRadius: "10px",
-  textAlign: "center",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-  cursor: "pointer",
 };
 
 export default Home;

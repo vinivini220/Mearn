@@ -1,30 +1,10 @@
 import React from "react";
+import { pageContainer, pageTitle, card } from "../../styles/sharedStyles";
 
 const Inventory = () => {
-
-  const container = {
-    padding: "30px",
-    background: "#ecf0f1",
-    minHeight: "100vh"
-  };
-
-  const title = {
-    fontSize: "30px",
-    marginBottom: "20px",
-    color: "#2c3e50"
-  };
-
-  const card = {
-    background: "white",
-    padding: "20px",
-    borderRadius: "10px",
-    marginBottom: "15px",
-    boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
-  };
-
   return (
-    <div style={container}>
-      <h1 style={title}>Medicine Inventory</h1>
+    <div style={pageContainer}>
+      <h1 style={pageTitle}>Medicine Inventory</h1>
 
       <div style={card}>
         <h3>Paracetamol</h3>
