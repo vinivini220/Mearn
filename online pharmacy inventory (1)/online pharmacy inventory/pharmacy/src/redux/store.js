@@ -1,25 +1,13 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
-
-const authSlice = createSlice({
-  name: "auth",
-  initialState: {
-    isLoggedIn: false,
-  },
-  reducers: {
-    login: (state) => {
-      state.isLoggedIn = true;
-    },
-    logout: (state) => {
-      state.isLoggedIn = false;
-    },
-  },
-});
-
-export const { login, logout } = authSlice.actions;
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "./authSlice";
+import medicineReducer from "./medicineSlice";
+import salesReducer from "./salesSlice";
 
 const store = configureStore({
   reducer: {
-    auth: authSlice.reducer,
+    auth: authReducer,
+    medicines: medicineReducer,
+    sales: salesReducer,
   },
 });
 
