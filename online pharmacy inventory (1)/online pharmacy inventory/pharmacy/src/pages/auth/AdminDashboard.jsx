@@ -1,15 +1,17 @@
   import React, { useState } from "react";
   import { useNavigate } from "react-router-dom";
+  import { useDispatch } from "react-redux";
+  import { logout } from "../../redux/store";
 
-  const AdminDashboard = ({ setIsAdminLoggedIn }) => {
+  const AdminDashboard = () => {
 
     const [hover, setHover] = useState("");
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-    // logout
     const handleLogout = () => {
-      setIsAdminLoggedIn(false);
-      navigate("/homepage");
+      dispatch(logout());
+      navigate("/adminlogin");
     };
 
     return (

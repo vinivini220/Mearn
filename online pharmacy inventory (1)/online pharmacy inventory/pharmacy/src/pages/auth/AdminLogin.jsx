@@ -1,16 +1,32 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/store";
+
+const ADMIN_USER = import.meta.env.VITE_ADMIN_USERNAME || "admin";
+const ADMIN_PASS = import.meta.env.VITE_ADMIN_PASSWORD || "admin123";
 
 const AdminLogin = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = () => {
-    // direct inventory page open (no validation)
-    navigate("/inventory");
+    if (!username.trim() || !password.trim()) {
+      setError("Username and password are required.");
+      return;
+    }
+
+    if (username === ADMIN_USER && password === ADMIN_PASS) {
+      dispatch(login());
+      navigate("/admindashboard");
+    } else {
+      setError("Invalid username or password.");
+    }
   };
 
   return (
@@ -36,6 +52,12 @@ const AdminLogin = () => {
           onChange={(e) => setPassword(e.target.value)}
           style={inputStyle}
         />
+
+        {error && (
+          <p style={{ color: "red", marginBottom: "10px", fontSize: "14px" }}>
+            {error}
+          </p>
+        )}
 
         <button onClick={handleLogin} style={buttonStyle}>
           Login

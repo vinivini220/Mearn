@@ -1,9 +1,9 @@
-import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // import Home from "./pages/auth/Home";
 import Home from "./pages/Inventory/Inventory"
@@ -22,9 +22,6 @@ import Settings from "./pages/settings/Settings";
 import Suppliers from "./pages/suppilers/Suppilers";
 
 function App() {
-
-  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
-
   return (
     <>
       <Navbar />
@@ -44,22 +41,19 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/register" element={<Register />} />
 
-            <Route
-              path="/adminlogin"
-              element={<AdminLogin onLogin={() => setIsAdminLoggedIn(true)} />}
-            />
+            <Route path="/adminlogin" element={<AdminLogin />} />
 
             <Route
               path="/admindashboard"
-              element={<AdminDashboard setIsAdminLoggedIn={setIsAdminLoggedIn} />}
+              element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>}
             />
 
-            <Route path="/Inventory" element={<Inventory />} />
-            <Route path="/suppliers" element={<Suppliers />} />
-            <Route path="/billing" element={<Billing />} />
-            <Route path="/reports" element={<Reports />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="/Inventory" element={<ProtectedRoute><Inventory /></ProtectedRoute>} />
+            <Route path="/suppliers" element={<ProtectedRoute><Suppliers /></ProtectedRoute>} />
+            <Route path="/billing" element={<ProtectedRoute><Billing /></ProtectedRoute>} />
+            <Route path="/reports" element={<ProtectedRoute><Reports /></ProtectedRoute>} />
+            <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
 
           </Routes>
 
